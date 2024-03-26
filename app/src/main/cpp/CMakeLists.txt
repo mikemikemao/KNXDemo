@@ -10,15 +10,18 @@ set(libname IKNX)
 include_directories(
         ${CMAKE_SOURCE_DIR}/
         ${CMAKE_SOURCE_DIR}/utils
+        ${CMAKE_SOURCE_DIR}/com
 )
 
 link_directories(
         ${jnilibs}/${ANDROID_ABI}
-        ${CMAKE_SOURCE_DIR}/utils/*.cpp
+
 )
 
 file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/*.cpp
+        ${CMAKE_SOURCE_DIR}/utils/*.cpp
+        ${CMAKE_SOURCE_DIR}/com/*.cpp
         )
 
 add_library( # Sets the name of the library.

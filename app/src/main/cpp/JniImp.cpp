@@ -1,6 +1,8 @@
 //
 // Created by pirate
 //
+#include <com/ComFunc.h>
+#include <com/Define.h>
 #include "jni.h"
 #include "utils/LogUtil.h"
 #define NATIVE_CLASS_NAME "com/hikvision/jni/IKNX"
@@ -13,7 +15,14 @@
 JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance)
 {
     int ret = 0;
-    LOGCATE("11111111111111");
+    ret = comLightControl(1);
+	if (ret != ERR_OK)
+	{
+		LOGCATE("comLightControl failed ret =%d",ret);
+	}
+	else{
+		LOGCATE("comLightControl success");
+	}
 }
 
 //视频预览相关
