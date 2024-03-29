@@ -3,6 +3,7 @@
 //
 #include <com/ComFunc.h>
 #include <com/Define.h>
+#include <knx/KNXWrapper.h>
 #include "jni.h"
 #include "utils/LogUtil.h"
 #define NATIVE_CLASS_NAME "com/hikvision/jni/IKNX"
@@ -15,7 +16,8 @@
 JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance)
 {
     int ret = 0;
-    ret = comLightControl(1);
+    //ret = comLightControl(1);
+    ret = knxTest();
 	if (ret != ERR_OK)
 	{
 		LOGCATE("comLightControl failed ret =%d",ret);
