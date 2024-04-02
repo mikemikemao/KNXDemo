@@ -76,7 +76,7 @@ void KNXCSearchRQ()
     memset(&packet_in,0x00,sizeof(knx_search_request));
     packet_in.control_host.protocol = KNX_PROTO_UDP;
     packet_in.control_host.address = inet_addr(LOCAL_IP);//���ص�ַ
-    packet_in.control_host.port = htons(KNXC_PORT );
+    packet_in.control_host.port = htons(KNXC_PORT);
     // Generate
     uint8_t buffer[KNX_HEADER_SIZE + KNX_SEARCH_REQUEST_SIZE];
     knx_generate(buffer, KNX_SEARCH_REQUEST, &packet_in);
@@ -2106,148 +2106,10 @@ int knxTest()
 
     pthread_t tid2;
     pthread_create( &tid2, NULL, thr_knx_tunnel_capture, NULL );
-
+    sleep(3);
     KNXCSearchRQ();
     LOGCATE("KNXCSearch done.\n");
-    sleep(3);
-    KNXCConnectRQ();
-    LOGCATE("KNXCConnectRQ done.\n");
-
-    //sleep(3);
-    //pthread_t tid3;
-    /*��������*/
-    //pthread_create( &tid3, NULL, thr_knx_keep_live, NULL );
-
-    sleep(3);
-    /*�ƿ�*/
-    KNXCTunnelRQ_OpenLight();
-
-
-#if 0
-    /*�޸�������ַ����,��ҪRS485ģ�鰴�±�̰�ť*/
-	sleep(3);
-	KNXCTunnelRQ_IndAddrWrite(0);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrConnect(1);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrRestart(2);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrDisconnect(3);
-
-#endif
-
-#if 1
-    /*�޸���������,��ҪRS485ģ�鰴�±�̰�ť*/
-    sleep(3);
-    KNXCTunnelRQ_EditConnect(0);
-
-    sleep(3);
-    KNXCTunnelRQ_EditAuthReq(1);
-
-    sleep(3);
-    KNXCTunnelRQ_EditPropValueWrite(2);
-
-    //sleep(3);
-    /*ĿǰдMem�������RS485��ש��Ҫ����ж��*/
-    //KNXCTunnelRQ_EditMemWrite(3);
-
-    sleep(3);
-    KNXCTunnelRQ_EditRestart(3);
-
-#endif
-
-#if 0
-    #if 0
-	/*����Rs485��Led�ز���(��ƹ�)*/
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485Connect(0);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485DevDescrRead(1);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485PropValueRead(2);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485PropValueWrite_close(3);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485PropValueRead_step2(4);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485Disconnect(5);
-#else
-	/*����Rs485��Led������(��ƿ�)*/
-	sleep(3);
-	KNXCTunnelRQ_Rs485Connect(0);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485DevDescrRead(1);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485PropValueRead(2);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485PropValueWrite_open(3);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485PropValueRead_step2(4);
-
-	sleep(3);
-	KNXCTunnelRQ_Rs485Disconnect(5);
-#endif
-#endif
-
-#if 0
-    /*�޸�������ַ����,��ҪRS485ģ�鰴�±�̰�ť*/
-	sleep(3);
-	KNXCTunnelRQ_IndAddrRead_step1(0);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrRead_step1(1);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrRead_step1(2);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrRead_step1(3);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrWrite(4);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrRead_step2(5);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrRead_step2(6);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrConnect(7);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrDevDescrRead(8);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrPropValueRead(9);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrRestart(10);
-
-	sleep(3);
-	KNXCTunnelRQ_IndAddrDisconnect(11);
-#endif
-
-
-
-
-    while (1)
-    {
-        pause();
-    }
+    sleep(5);
     return 0;
 }
 
