@@ -26,6 +26,7 @@
 #define LOCAL_IP      "10.6.120.85"
 #define KNX_MUILCAST_RECV_LEN 2048*100
 #define KNX_MUILCAST_ADDR      "224.0.23.12"
+#define KNX_NET_IP_ROUTER       "10.6.120.23"
 #define KNXS_PORT      (3671)
 #define KNXC_PORT      (53985)
 #define SOCKET_RECV_BUFFER      (1024*1024)
@@ -83,6 +84,32 @@ void KNXCSearchRQ()
 
     LOGCATE("KNXCSearchRQ->server_ip %s server_port %d.\n",KNX_MUILCAST_ADDR,KNXS_PORT);
     sendlen = knx_send(g_knxClient.control_socket,(unsigned char*)buffer, sizeof(buffer),KNX_MUILCAST_ADDR, KNXS_PORT);
+    if(sendlen != sizeof(buffer))
+    {
+        LOGCATE("knx_send error .\n");
+    }
+
+
+    LOGCATE("KNXCSearchRQ success %d.\n",g_knxClient.control_socket);
+
+    return ;
+}
+
+
+void KNXCDescription()
+{
+    int sendlen = 0;
+    knx_search_request packet_in;
+    memset(&packet_in,0x00,sizeof(knx_search_request));
+    packet_in.control_host.protocol = KNX_PROTO_UDP;
+    packet_in.control_host.address = inet_addr(LOCAL_IP);//���ص�ַ
+    packet_in.control_host.port = htons(KNXC_PORT);
+    // Generate
+    uint8_t buffer[KNX_HEADER_SIZE + KNX_SEARCH_REQUEST_SIZE];
+    knx_generate(buffer, KNX_DESCRIPTION_REQUEST, &packet_in);
+
+    LOGCATE("KNXCSearchRQ->server_ip %s server_port %d.\n",KNX_NET_IP_ROUTER,KNXS_PORT);
+    sendlen = knx_send(g_knxClient.control_socket,(unsigned char*)buffer, sizeof(buffer),KNX_NET_IP_ROUTER, KNXS_PORT);
     if(sendlen != sizeof(buffer))
     {
         LOGCATE("knx_send error .\n");
@@ -1827,7 +1854,7 @@ int knx_packet_parse(int fd)
     int n;
     socklen_t len;
     struct sockaddr_in sa;
-    uint8_t buffer[KNX_MUILCAST_RECV_LEN];
+    unsigned char buffer[KNX_MUILCAST_RECV_LEN];
     knx_packet packet_out;
     memset(&packet_out,0x00,sizeof(knx_packet));
     len = sizeof(struct sockaddr_in);
@@ -1852,6 +1879,10 @@ int knx_packet_parse(int fd)
             g_knxClient.remote_port = ntohs(host.port);
             snprintf(g_knxClient.remote_ip,sizeof(g_knxClient.remote_ip),"%s",host_ip);
             LOGCATE("knx_packet_parse host address: %s port: %d .\n",g_knxClient.remote_ip,g_knxClient.remote_port);
+        }
+        else if(KNX_DISCONNECT_RESPONSE == packet_out.service)
+        {
+            DEBUG_LOGCATI("1111111111111111");
         }
         else if(KNX_CONNECTION_RESPONSE == packet_out.service)
         {
@@ -2109,7 +2140,11 @@ int knxTest()
     sleep(3);
     KNXCSearchRQ();
     LOGCATE("KNXCSearch done.\n");
+    KNXCDescription();
+    LOGCATE("KNXCDescription done.\n");
     sleep(5);
+    KNXCConnectRQ();
+    printf("KNXCConnectRQ done.\n");
     return 0;
 }
 
