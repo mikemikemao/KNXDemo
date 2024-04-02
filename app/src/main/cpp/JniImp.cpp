@@ -16,8 +16,8 @@
 JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance)
 {
     int ret = 0;
-    //ret = comLightControl(1);
-    ret = knxTest();
+    ret = comLightControl(1);
+    //ret = knxTest();
 	if (ret != ERR_OK)
 	{
 		LOGCATE("comLightControl failed ret =%d",ret);

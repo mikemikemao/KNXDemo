@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <utils/LogUtil.h>
+#include <utils/ToolUnits.h>
 #include "ComPack.h"
 #include "Define.h"
 #include "ComFunc.h"
@@ -40,6 +41,7 @@ int comLightControl(unsigned char state)
 	int len=100;
 	char RecvBuff[100]={0};
 	len = com_recv(port_h,RecvBuff,len);
+	LOGCATE("%s", hexdump(reinterpret_cast<void *>(RecvBuff), len).c_str());
 	com_close(port_h);
 	if(len<=0)
 	{

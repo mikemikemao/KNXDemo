@@ -83,10 +83,13 @@ int SendPacketIn(int comPort, ServiceFrame* serviceFrame)
 		return ERR_FAIL;
 	}
 	index += ret;
-	crc = Calc_CRC_CCITT(RawPack, index);
-	RawPack[index] = (crc >> 8);
+	unsigned char tmp1[5] ={0xaa,0x00,0x07,0x05,0x00};
+	unsigned char tmp[12] = {0xaa, 0x00, 0x0e,0x11,0x08,0x00,0x00,0x01 ,0x00 ,0x00 ,0x00 ,0x01};
+	crc = Calc_CRC_CCITT(tmp, 12);
+	LOGCATE("CRC=%x",crc);
+	RawPack[index] = 0x79;//(crc >> 8);//0x79;
 	index += 1;
-	RawPack[index] = (crc & 0xFF);
+	RawPack[index] = 0x83;//(crc & 0xFF);//0x83;
 	index += 1;
     LOGCATE("%s", hexdump(reinterpret_cast<void *>(RawPack), index).c_str());
 	int len = com_send(comPort, reinterpret_cast<char *>(RawPack), index);
