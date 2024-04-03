@@ -24,9 +24,9 @@ int comLightControl(unsigned char state)
     }
     serviceFrame.size = 8;
     serviceFrame.controlType = LIGHT_CONTROL;
-    serviceFrame.property = OPEN_CLOSE_STATE;
+    serviceFrame.property = OPEN_CLOSE;
     serviceFrame.channel = CHANNEL_0;
-    serviceFrame.controlStatus = STATE_MSG;
+    serviceFrame.controlStatus = CONTROL_MSG;
     serviceFrame.data[0] = (state == 0) ? 0 : 1;
     lRV = SendPacketIn(port_h,&serviceFrame);
 	if(lRV < 0)

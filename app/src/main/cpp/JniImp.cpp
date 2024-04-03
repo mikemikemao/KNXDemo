@@ -13,10 +13,10 @@
 * Method:    openLight
 * Signature: ()V
 */
-JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance)
+JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance,jint lightState)
 {
     int ret = 0;
-    ret = comLightControl(1);
+    ret = comLightControl(lightState);
     //ret = knxTest();
 	if (ret != ERR_OK)
 	{
@@ -29,7 +29,7 @@ JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance)
 
 //视频预览相关
 static JNINativeMethod g_methods[] = {
-        {"native_openLight",                      "()V",       (void *)(openLight)},
+        {"native_openLight",                      "(I)V",       (void *)(openLight)},
 };
 
 static int RegisterNativeMethods(JNIEnv *env, const char *className, JNINativeMethod *methods, int methodNum)

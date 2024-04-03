@@ -9,5 +9,5 @@ public class IKNX {
      * param surface
      * @return
      */
-    public native void native_openLight();
+    public native void native_openLight(int lightState);
 }

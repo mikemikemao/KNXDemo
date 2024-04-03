@@ -19,13 +19,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void initView(){
         findViewById(R.id.tv_openLight).setOnClickListener(this);
+        findViewById(R.id.tv_closeLight).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_openLight:
-                iknx.native_openLight();
+                iknx.native_openLight(1);
+                break;
+            case R.id.tv_closeLight:
+                iknx.native_openLight(0);
                 break;
             default:
                 break;
