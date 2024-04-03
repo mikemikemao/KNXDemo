@@ -12,6 +12,8 @@ int comLightControl(unsigned char state)
     int lRV=-1;
 	int port_h= 0;
     char errmsg[64];
+	int len=100;
+	char RecvBuff[100]={0};
     ServiceFrame serviceFrame;
     memset(&serviceFrame,0x00,sizeof(ServiceFrame));
 
@@ -22,9 +24,9 @@ int comLightControl(unsigned char state)
     }
     serviceFrame.size = 8;
     serviceFrame.controlType = LIGHT_CONTROL;
-    serviceFrame.property = OPEN_CLOSE;
+    serviceFrame.property = OPEN_CLOSE_STATE;
     serviceFrame.channel = CHANNEL_0;
-    serviceFrame.controlStatus = CONTROL_MSG;
+    serviceFrame.controlStatus = STATE_MSG;
     serviceFrame.data[0] = (state == 0) ? 0 : 1;
     lRV = SendPacketIn(port_h,&serviceFrame);
 	if(lRV < 0)
@@ -38,14 +40,18 @@ int comLightControl(unsigned char state)
         com_close(port_h);
         return ERR_TIME_OUT;
 	}
-	int len=100;
-	char RecvBuff[100]={0};
 	len = com_recv(port_h,RecvBuff,len);
 	LOGCATE("%s", hexdump(reinterpret_cast<void *>(RecvBuff), len).c_str());
 	com_close(port_h);
 	if(len<=0)
 	{
 		return ERR_IORECV;
+	}
+	lRV = analysisPack((unsigned char*)RecvBuff,len);
+	if(lRV!=0)
+	{
+		LOGCATE("analysisPack err");
+		return ERR_FAIL;
 	}
 	return 0;
 	

@@ -83,13 +83,10 @@ int SendPacketIn(int comPort, ServiceFrame* serviceFrame)
 		return ERR_FAIL;
 	}
 	index += ret;
-	unsigned char tmp1[5] ={0xaa,0x00,0x07,0x05,0x00};
-	unsigned char tmp[12] = {0xaa, 0x00, 0x0e,0x11,0x08,0x00,0x00,0x01 ,0x00 ,0x00 ,0x00 ,0x01};
-	crc = Calc_CRC_CCITT(tmp, 12);
-	LOGCATE("CRC=%x",crc);
-	RawPack[index] = 0x79;//(crc >> 8);//0x79;
+	crc = Calc_CRC_CCITT(RawPack, index);
+	RawPack[index] = (crc >> 8);//0x79;
 	index += 1;
-	RawPack[index] = 0x83;//(crc & 0xFF);//0x83;
+	RawPack[index] = (crc & 0xFF);//0x83;
 	index += 1;
     LOGCATE("%s", hexdump(reinterpret_cast<void *>(RawPack), index).c_str());
 	int len = com_send(comPort, reinterpret_cast<char *>(RawPack), index);
@@ -102,7 +99,58 @@ int SendPacketIn(int comPort, ServiceFrame* serviceFrame)
 }
 
 
-
+int analysisPack(unsigned char* data,int len)
+{
+	if(NULL == data)
+	{
+		return ERR_FAIL;
+	}
+	if(len < 7)
+	{
+		return ERR_FAIL;
+	}
+	int idx = 0;
+	int packLen = 0;
+	unsigned short crc = 0;
+	if(data[idx] != PACK_START_FLAG)
+	{
+		DEBUG_LOGCATE("PACK_START_FLAG ERR");
+		return ERR_FAIL;
+	}
+	idx++;
+	packLen = (data[idx] << 8) + data[idx+1];
+	if (packLen != len)
+	{
+		DEBUG_LOGCATE("len ERR");
+		return ERR_FAIL;
+	}
+	idx+=2;
+	if (data[idx] != SERVICE_ID_RECV)
+	{
+		DEBUG_LOGCATE("SERVICE_ID_RECV ERR");
+		return ERR_FAIL;
+	}
+	idx++;
+	if (data[idx] != RESPONS_SUCCESS)
+	{
+		DEBUG_LOGCATE("RESPONS ERR");
+		return ERR_FAIL;
+	}
+	idx++;
+	crc = Calc_CRC_CCITT(data, len-2);
+	if(data[idx] != (crc >> 8))
+	{
+		DEBUG_LOGCATE("crc ERR");
+		return ERR_FAIL;
+	}
+	idx++;
+	if(data[idx] != (crc & 0xFF))
+	{
+		DEBUG_LOGCATE("crc ERR");
+		return ERR_FAIL;
+	}
+	return ERR_OK;
+}
 
 
 

@@ -23,6 +23,7 @@ typedef enum
 typedef enum
 {
     OPEN_CLOSE = 0x00,
+    OPEN_CLOSE_STATE = 0x01,
 }LIGHT_PROPERTY;
 
 typedef enum
@@ -36,8 +37,16 @@ typedef enum
 typedef enum
 {
     SERVICE_ID_RECV   = 0x5,
-    SERVICE_ID_SEND   = 0x11,
+    SERVICE_ID_SEND   = 0x0B,
 }SERVICE_ID;
+
+#define MAX_PACK_SZIE           1500
+#define MAX_SERVICE_FRAME       255
+#define PACK_START_FLAG         0xAA
+#define PACK_FRAME_LEFT         6
+#define SERVICE_FRAME_HEAD      7
+#define RESPONS_SUCCESS         0X01
+#define RESPONS_FAIL            0X00
 
 /************************************************************************
  ----------------------  错误码  --------------------------------------

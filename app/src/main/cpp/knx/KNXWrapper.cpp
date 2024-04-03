@@ -2145,6 +2145,9 @@ int knxTest()
     sleep(5);
     KNXCConnectRQ();
     printf("KNXCConnectRQ done.\n");
+    sleep(3);
+    /*灯控*/
+    KNXCTunnelRQ_OpenLight();
     return 0;
 }
 
