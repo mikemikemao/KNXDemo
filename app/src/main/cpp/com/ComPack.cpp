@@ -4,6 +4,7 @@
 #include <string.h>
 #include <utils/LogUtil.h>
 #include <utils/ToolUnits.h>
+#include <utils/ErrCode.h>
 #include "ComPack.h"
 
 int serviceFrame2Array(ServiceFrame* serviceFrame,unsigned char* pack)

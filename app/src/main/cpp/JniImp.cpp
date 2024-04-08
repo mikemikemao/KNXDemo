@@ -6,6 +6,7 @@
 #include <knx/KNXWrapper.h>
 #include "jni.h"
 #include "utils/LogUtil.h"
+#include "KnxFunc.h"
 #define NATIVE_CLASS_NAME "com/hikvision/jni/IKNX"
 
 /*
@@ -17,6 +18,7 @@ JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance,jint lightState)
 {
     int ret = 0;
     ret = comLightControl(lightState);
+    ret = KnxlightControl(lightState);
     //ret = knxTest();
 	if (ret != ERR_OK)
 	{

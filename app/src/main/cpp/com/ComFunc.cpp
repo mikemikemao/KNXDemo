@@ -2,6 +2,7 @@
 #include <string.h>
 #include <utils/LogUtil.h>
 #include <utils/ToolUnits.h>
+#include <utils/ErrCode.h>
 #include "ComPack.h"
 #include "Define.h"
 #include "ComFunc.h"

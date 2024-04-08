@@ -13,6 +13,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/com
         ${CMAKE_SOURCE_DIR}/knx
         ${CMAKE_SOURCE_DIR}/knx/include
+        ${CMAKE_SOURCE_DIR}/knx/address
         ${CMAKE_SOURCE_DIR}/socket
 )
 
@@ -26,6 +27,7 @@ file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/utils/*.cpp
         ${CMAKE_SOURCE_DIR}/com/*.cpp
         ${CMAKE_SOURCE_DIR}/knx/*.cpp
+        ${CMAKE_SOURCE_DIR}/knx/address/*.cpp
         ${CMAKE_SOURCE_DIR}/knx/proto/*.c
         ${CMAKE_SOURCE_DIR}/socket/*.cpp
         )
