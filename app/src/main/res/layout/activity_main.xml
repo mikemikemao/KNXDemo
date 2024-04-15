@@ -20,4 +20,12 @@
         style="@style/itemMargin"
         android:layout_margin="32dp"
         android:text="关灯"/>
+    <TextView
+        android:id="@+id/tv_closeLight_State"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="50dp"
+        style="@style/itemMargin"
+        android:layout_margin="32dp"
+        android:text="获取灯状态"/>
 </LinearLayout>

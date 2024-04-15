@@ -31,9 +31,16 @@ JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance,jint lightState)
 	}
 }
 
+JNIEXPORT int JNICALL openLightState(JNIEnv *env, jobject instance)
+{
+	LOGCATE("openLightState");
+	return comLightStateControl();
+}
+
 //视频预览相关
 static JNINativeMethod g_methods[] = {
         {"native_openLight",                      "(I)V",       (void *)(openLight)},
+		{"native_openLightState",                 "()I",       (void *)(openLightState)},
 };
 
 static int RegisterNativeMethods(JNIEnv *env, const char *className, JNINativeMethod *methods, int methodNum)

@@ -10,4 +10,5 @@ public class IKNX {
      * @return
      */
     public native void native_openLight(int lightState);
+    public native int native_openLightState();
 }

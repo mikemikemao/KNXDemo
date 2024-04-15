@@ -13,7 +13,7 @@ int comLightControl(unsigned char state);
  * 参数：state - 0 关灯 1 开灯
  * 返回：0 成功 其他 失败
 ****************************************************************************/
-int comLightStateControl(unsigned char state);
+int comLightStateControl();
 
 
 #endif
