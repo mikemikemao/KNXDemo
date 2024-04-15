@@ -98,9 +98,19 @@ int SendPacketIn(int comPort, ServiceFrame* serviceFrame)
 	}
 	return ERR_OK;
 }
+int sendAck(int comPort)
+{
+	unsigned char ackBuf[7] = {0xaa,0x00,0x07,0x05,0x01,0x17,0x82};
+	int len = com_send(comPort, reinterpret_cast<char *>(ackBuf), 7);
+	if(len!= 7)
+	{
+		LOGCATE("com_send failed ret =%d need =%d",len,7);
+		return ERR_IOSEND;
+	}
+	return ERR_OK;
+}
 
-
-int analysisPack(unsigned char* data,int len)
+int analysisAck(unsigned char* data,int len)
 {
 	if(NULL == data)
 	{
@@ -146,6 +156,79 @@ int analysisPack(unsigned char* data,int len)
 	}
 	idx++;
 	if(data[idx] != (crc & 0xFF))
+	{
+		DEBUG_LOGCATE("crc ERR");
+		return ERR_FAIL;
+	}
+	return ERR_OK;
+}
+
+int analysisFrame(unsigned char* data,unsigned char* recvdata,int* recvdataLen)
+{
+	int frameLen =0;
+	int idx = 0;
+	frameLen = data[idx];
+	if(frameLen < 7 || frameLen >255)
+	{
+		LOGCATE("frameLen failed len =%d",frameLen);
+		return ERR_FAIL;
+	}
+	*recvdataLen = frameLen - 7;
+	memcpy(recvdata,data+7,*recvdataLen);
+	LOGCATE("RECV0 =%d ",recvdata[0]);
+	LOGCATE("frameLen =%d ",frameLen);
+	LOGCATE("%s", hexdump(reinterpret_cast<void *>(data), frameLen).c_str());
+	return ERR_OK;
+}
+
+int analysisPack(unsigned char* data,int dataLen,unsigned char* recvData,int* recvDataLen)
+{
+	if(NULL == recvData || NULL == data)
+	{
+		return ERR_FAIL;
+	}
+	if(dataLen < 7)
+	{
+		return ERR_FAIL;
+	}
+	int ret = 0;
+	int idx = 0;
+	int packLen = 0;
+	unsigned short crc = 0;
+	if(data[idx] != PACK_START_FLAG)
+	{
+		LOGCATE("PACK_START_FLAG ERR,start =%u",data[idx]);
+		return ERR_FAIL;
+	}
+	idx++;
+	packLen = (data[idx] << 8) + data[idx+1];
+//	if (packLen != len)
+//	{
+//		DEBUG_LOGCATE("len ERR");
+//		return ERR_FAIL;
+//	}
+	idx+=2;
+	if (!(data[idx] == SERVICE_ID_RECV || data[idx] == SERVICE_ID_SEND) )
+	{
+		DEBUG_LOGCATE("SERVICE_ID_RECV ERR");
+		return ERR_FAIL;
+	}
+	idx++;
+	ret = analysisFrame(data+idx,recvData,recvDataLen);
+	if (ret != ERR_OK)
+	{
+		DEBUG_LOGCATE("analysisFrame ERR ret =%d",ret);
+		return ERR_FAIL;
+	}
+
+	crc = Calc_CRC_CCITT(data, packLen-2);
+	if(data[packLen-2] != (crc >> 8))
+	{
+        LOGCATE("crc ERR data =%u %u",data[packLen-2],data[packLen-1]);
+		LOGCATE("crc ERR crc =%u %u",crc >> 8,(crc & 0xFF));
+		return ERR_FAIL;
+	}
+	if(data[packLen-1] != (crc & 0xFF))
 	{
 		DEBUG_LOGCATE("crc ERR");
 		return ERR_FAIL;

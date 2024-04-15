@@ -17,8 +17,9 @@
 JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance,jint lightState)
 {
     int ret = 0;
-    ret = comLightStateControl(lightState);
-	//ret = comLightControl(lightState);
+    //ret =  recvService();
+    //ret = comLightStateControl(lightState);
+	ret = comLightControl(lightState);
     //ret = KnxlightControl(lightState);
     //ret = knxTest();
 	if (ret != ERR_OK)

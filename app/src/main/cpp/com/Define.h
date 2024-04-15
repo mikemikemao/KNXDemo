@@ -6,6 +6,7 @@
  ----------------------  常规定义  --------------------------------------
  ********************************************************************** */
 #define SHORT_TIME_OUT       5000
+#define SHORT_SHORT_TIME_OUT 1000
 #define COM_PATH             "/dev/ttyS7"
 #define BAUND_RATE           19200
 
@@ -45,6 +46,8 @@ typedef enum
 #define PACK_START_FLAG         0xAA
 #define PACK_FRAME_LEFT         6
 #define SERVICE_FRAME_HEAD      7
+#define ACK_LEN                 7
+
 #define RESPONS_SUCCESS         0X01
 #define RESPONS_FAIL            0X00
 

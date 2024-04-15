@@ -12,7 +12,12 @@ typedef struct ServiceFrame
 };
 
 int SendPacketIn(int comPort, ServiceFrame* serviceFrame);
+int sendAck(int comPort);
 
-int analysisPack(unsigned char* data,int len);
+int analysisAck(unsigned char* data,int len);
+
+int analysisPack(unsigned char* data,int dataLen,unsigned char* recvData,int* recvDataLen);
+
+int analysisFrame(unsigned char* data,unsigned char* recvdata,int* recvdataLen);
 #endif
 
