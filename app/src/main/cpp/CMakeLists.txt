@@ -15,6 +15,8 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/knx/include
         ${CMAKE_SOURCE_DIR}/socket
         ${CMAKE_SOURCE_DIR}/knxcore/address
+        ${CMAKE_SOURCE_DIR}/knxcore/communication
+        ${CMAKE_SOURCE_DIR}/knxcore/config
 )
 
 link_directories(
@@ -29,7 +31,10 @@ file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/knx/*.cpp
         ${CMAKE_SOURCE_DIR}/knx/proto/*.c
         ${CMAKE_SOURCE_DIR}/socket/*.cpp
+        ${CMAKE_SOURCE_DIR}/knxcore/*.cpp
+        ${CMAKE_SOURCE_DIR}/knxcore/communication/*.cpp
         ${CMAKE_SOURCE_DIR}/knxcore/address/*.cpp
+        ${CMAKE_SOURCE_DIR}/knxcore/config/*.cpp
         )
 
 add_library( # Sets the name of the library.
