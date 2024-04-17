@@ -3,6 +3,7 @@
 //
 
 #include <utils/ErrCode.h>
+#include <utils/ToolUnits.h>
 #include "GroupAddress.h"
 
 int GroupAddress::of(unsigned char main, unsigned char middle, unsigned char sub) {
@@ -26,4 +27,14 @@ int GroupAddress::of(unsigned char main, unsigned char middle, unsigned char sub
     // byte 1: xxxx xxxx
     gropAddr[1] = sub;
     return  ERR_OK;
+}
+
+AddressType GroupAddress::getAddressType()
+{
+    return AddressType::GROUP;
+}
+
+string GroupAddress::getAddress()
+{
+    return hexmem(gropAddr, STRUCTURE_LENGTH);
 }

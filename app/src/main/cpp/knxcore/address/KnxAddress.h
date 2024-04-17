@@ -11,9 +11,9 @@
 using namespace std;
 class KnxAddress {
 public:
-    static constexpr auto STRUCTURE_LENGTH           = 2;
-    AddressType getAddressType();
-    string getAddress();
+    static constexpr auto STRUCTURE_LENGTH      = 2;
+    virtual AddressType getAddressType() = 0;
+    virtual string getAddress() = 0;
 };
 
 #endif //KNXDEMO_KNXADDRESS_H

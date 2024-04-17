@@ -34,7 +34,7 @@ string hexdump(const void *buf, int len) {
     return ret;
 }
 
-string hexmem(const void *buf, size_t len) {
+string hexmem(const void* buf, int len) {
     string ret;
     char tmp[8];
     const uint8_t *data = (const uint8_t *) buf;

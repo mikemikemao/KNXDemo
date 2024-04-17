@@ -8,13 +8,15 @@
 
 #include "KnxAddress.h"
 
-class GroupAddress : public KnxAddress{
+class GroupAddress final : public KnxAddress{
 public:
     GroupAddress() {}
     ~GroupAddress(){}
     int of(unsigned char main, unsigned char middle, unsigned char sub);
+    AddressType getAddressType();
+    string getAddress();
 private:
-    signed char gropAddr[STRUCTURE_LENGTH];
+    unsigned char gropAddr[STRUCTURE_LENGTH];
 };
 
 
