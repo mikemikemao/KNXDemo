@@ -6,7 +6,7 @@
 #define KNXDEMO_KNXFUNC_H
 
 
-#include "../utils/ErrCode.h"
+#include "utils/ErrCode.h"
 
 int KnxlightControl(byte lightState);
 

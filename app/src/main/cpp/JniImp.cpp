@@ -6,7 +6,7 @@
 #include <knx/KNXWrapper.h>
 #include "jni.h"
 #include "utils/LogUtil.h"
-#include "KnxFunc.h"
+#include "knxcore/KnxFunc.h"
 #define NATIVE_CLASS_NAME "com/hikvision/jni/IKNX"
 
 /*
