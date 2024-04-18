@@ -36,7 +36,7 @@ include_directories(
         ${CMAKE_SOURCE_DIR}/com
         ${CMAKE_SOURCE_DIR}/knx
         ${CMAKE_SOURCE_DIR}/knx/include
-        ${CMAKE_SOURCE_DIR}/socket
+        ${CMAKE_SOURCE_DIR}/test
         ${CMAKE_SOURCE_DIR}/knxcore/address
         ${CMAKE_SOURCE_DIR}/knxcore/communication
         ${CMAKE_SOURCE_DIR}/knxcore/config
@@ -59,7 +59,7 @@ file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/com/*.cpp
         ${CMAKE_SOURCE_DIR}/knx/*.cpp
         ${CMAKE_SOURCE_DIR}/knx/proto/*.c
-        ${CMAKE_SOURCE_DIR}/socket/*.cpp
+        ${CMAKE_SOURCE_DIR}/test/*.cpp
         ${CMAKE_SOURCE_DIR}/knxcore/*.cpp
         ${CMAKE_SOURCE_DIR}/knxcore/communication/*.cpp
         ${CMAKE_SOURCE_DIR}/knxcore/address/*.cpp

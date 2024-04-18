@@ -4,6 +4,7 @@
 #include <com/ComFunc.h>
 #include <com/Define.h>
 #include <knx/KNXWrapper.h>
+#include <test/UnitTest.h>
 #include "jni.h"
 #include "utils/LogUtil.h"
 #include "knxcore/KnxFunc.h"
@@ -37,10 +38,16 @@ JNIEXPORT int JNICALL openLightState(JNIEnv *env, jobject instance)
 	return comLightStateControl();
 }
 
+JNIEXPORT void JNICALL test(JNIEnv *env, jobject instance)
+{
+	 LoggerTest();
+}
+
 //视频预览相关
 static JNINativeMethod g_methods[] = {
         {"native_openLight",                      "(I)V",       (void *)(openLight)},
-		{"native_openLightState",                 "()I",       (void *)(openLightState)},
+		{"native_openLightState",                 "()I",        (void *)(openLightState)},
+		{"native_test",                           "()V",        (void *)(test)},
 };
 
 static int RegisterNativeMethods(JNIEnv *env, const char *className, JNINativeMethod *methods, int methodNum)

@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         iknx = new IKNX();
         initView();
+        iknx.native_test();
     }
     private void initView(){
         findViewById(R.id.tv_openLight).setOnClickListener(this);

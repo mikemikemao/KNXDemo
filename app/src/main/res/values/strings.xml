@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KNXDemo</string>
+    <string name="err_permission">Permission Error</string>
 </resources>
