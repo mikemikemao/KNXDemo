@@ -7,5 +7,6 @@
 
 
 int LoggerTest();
+int eventPollerTest();
 
 #endif //KNXDEMO_UNITTEST_H

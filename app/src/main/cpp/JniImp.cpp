@@ -40,7 +40,8 @@ JNIEXPORT int JNICALL openLightState(JNIEnv *env, jobject instance)
 
 JNIEXPORT void JNICALL test(JNIEnv *env, jobject instance)
 {
-	 LoggerTest();
+	 //LoggerTest();
+	eventPollerTest();
 }
 
 //视频预览相关
