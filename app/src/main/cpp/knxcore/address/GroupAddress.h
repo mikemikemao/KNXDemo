@@ -7,16 +7,32 @@
 
 
 #include "KnxAddress.h"
-
-class GroupAddress final : public KnxAddress{
+#include "ErrCode.h"
+/**
+* <pre>
+* +-7-+-6-+-5-+-4-+-3-+-2-+-1-+-0-+-7-+-6-+-5-+-4-+-3-+-2-+-1-+-0-+
+* | Byte 1                      | Byte 2                          |
+* | (1 octet)                   | (1 octet)                       |
+* +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+* </pre>
+ * */
+class GroupAddress : public std::enable_shared_from_this<GroupAddress>, public KnxAddress{
 public:
+    using Ptr = std::shared_ptr<GroupAddress>;
+    GroupAddress(byte* addressRawData,int addressRawDataLen);
+    Ptr of(byte* bytes,int bytesLen) {
+        return std::make_shared<GroupAddress>(bytes,bytesLen);
+    }
+//    Ptr of(std::string addressAsString){
+//        addressAsString.
+//    }
     GroupAddress() {}
     ~GroupAddress(){}
     int of(unsigned char main, unsigned char middle, unsigned char sub);
     AddressType getAddressType();
     string getAddress();
 private:
-    unsigned char gropAddr[STRUCTURE_LENGTH];
+    unsigned char address[STRUCTURE_LENGTH];
 };
 
 
