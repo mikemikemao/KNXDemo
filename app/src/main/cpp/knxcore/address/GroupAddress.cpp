@@ -4,7 +4,18 @@
 
 #include <utils/ErrCode.h>
 #include <utils/ToolUnits.h>
+#include <zltoolkit/Util/logger.h>
 #include "GroupAddress.h"
+using namespace toolkit;
+
+GroupAddress::GroupAddress(byte* addressRawData,int addressRawDataLen)
+{
+    if (addressRawDataLen != STRUCTURE_LENGTH){
+        LogE("GroupAddress len err");
+    } else{
+        memcpy(address,addressRawData,STRUCTURE_LENGTH);
+    }
+}
 
 int GroupAddress::of(unsigned char main, unsigned char middle, unsigned char sub) {
     if ((main>=0 && main<=31) != true)
@@ -23,9 +34,7 @@ int GroupAddress::of(unsigned char main, unsigned char middle, unsigned char sub
     {
         return ERR_FAIL;
     }
-    gropAddr[0] = ((main & 0x1F) << 3) + (middle & 0x07);
-    // byte 1: xxxx xxxx
-    gropAddr[1] = sub;
+
     return  ERR_OK;
 }
 
@@ -36,5 +45,5 @@ AddressType GroupAddress::getAddressType()
 
 string GroupAddress::getAddress()
 {
-    return hexmem(gropAddr, STRUCTURE_LENGTH);
+    return hexmem(address, STRUCTURE_LENGTH);
 }

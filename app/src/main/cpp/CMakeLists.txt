@@ -82,6 +82,19 @@ add_library( # Sets the name of the library.
         )
 
 
+#add_library(
+#        libsrt
+#        SHARED
+#        IMPORTED
+#)
+
+#指明 so 库的路径，CMAKE_SOURCE_DIR 表示 CMakeLists.txt 的路径
+#set_target_properties(
+#        libsrt
+#        PROPERTIES IMPORTED_LOCATION
+#        ${CMAKE_SOURCE_DIR}/lib/ezlink/libsrt.so)
+
+
 set(native-libs
         android
         log
@@ -97,4 +110,5 @@ target_link_libraries( # Specifies the target library.
         # included in the NDK.
         ${log-lib}
         ${native-libs}
+        #libsrt
         )

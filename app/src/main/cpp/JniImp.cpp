@@ -5,10 +5,12 @@
 #include <com/Define.h>
 #include <knx/KNXWrapper.h>
 #include <test/UnitTest.h>
+#include <zltoolkit/Util/logger.h>
 #include "jni.h"
 #include "utils/LogUtil.h"
 #include "knxcore/KnxFunc.h"
 #define NATIVE_CLASS_NAME "com/hikvision/jni/IKNX"
+using namespace toolkit;
 
 /*
 * Class:     com_hikvision_jni_IKNX
