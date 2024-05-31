@@ -7,7 +7,6 @@
 #include <test/UnitTest.h>
 #include <zltoolkit/Util/logger.h>
 #include "jni.h"
-#include "utils/LogUtil.h"
 #include "knxcore/KnxFunc.h"
 #define NATIVE_CLASS_NAME "com/hikvision/jni/IKNX"
 using namespace toolkit;
@@ -27,16 +26,16 @@ JNIEXPORT void JNICALL openLight(JNIEnv *env, jobject instance,jint lightState)
     //ret = knxTest();
 	if (ret != ERR_OK)
 	{
-		LOGCATE("comLightControl failed ret =%d",ret);
+		LogE("comLightControl failed ret =%d",ret);
 	}
 	else{
-		LOGCATE("comLightControl success");
+		LogE("comLightControl success");
 	}
 }
 
 JNIEXPORT int JNICALL openLightState(JNIEnv *env, jobject instance)
 {
-	LOGCATE("openLightState");
+	LogE("openLightState");
 	return comLightStateControl();
 }
 
@@ -55,16 +54,16 @@ static JNINativeMethod g_methods[] = {
 
 static int RegisterNativeMethods(JNIEnv *env, const char *className, JNINativeMethod *methods, int methodNum)
 {
-	LOGCATE("RegisterNativeMethods");
+	LogE("RegisterNativeMethods");
 	jclass clazz = env->FindClass(className);
 	if (clazz == NULL)
 	{
-		LOGCATE("RegisterNativeMethods fail. clazz == NULL");
+		LogE("RegisterNativeMethods fail. clazz == NULL");
 		return JNI_FALSE;
 	}
 	if (env->RegisterNatives(clazz, methods, methodNum) < 0)
 	{
-		LOGCATE("RegisterNativeMethods fail");
+		LogE("RegisterNativeMethods fail");
 		return JNI_FALSE;
 	}
 	return JNI_TRUE;
@@ -72,11 +71,11 @@ static int RegisterNativeMethods(JNIEnv *env, const char *className, JNINativeMe
 
 static void UnregisterNativeMethods(JNIEnv *env, const char *className)
 {
-	LOGCATE("UnregisterNativeMethods");
+	LogE("UnregisterNativeMethods");
 	jclass clazz = env->FindClass(className);
 	if (clazz == NULL)
 	{
-		LOGCATE("UnregisterNativeMethods fail. clazz == NULL");
+		LogE("UnregisterNativeMethods fail. clazz == NULL");
 		return;
 	}
 	if (env != NULL)
@@ -88,7 +87,7 @@ static void UnregisterNativeMethods(JNIEnv *env, const char *className)
 // call this func when loading lib
 extern "C" jint JNI_OnLoad(JavaVM *jvm, void *p)
 {
-	LOGCATE("===== JNI_OnLoad =====");
+	LogE("===== JNI_OnLoad =====");
 	jint jniRet = JNI_ERR;
 	JNIEnv *env = NULL;
 	if (jvm->GetEnv((void **) (&env), JNI_VERSION_1_6) != JNI_OK)

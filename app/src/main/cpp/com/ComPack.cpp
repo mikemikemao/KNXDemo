@@ -2,10 +2,11 @@
 #include "Define.h"
 #include <time.h>
 #include <string.h>
-#include <utils/LogUtil.h>
-#include <utils/ToolUnits.h>
+#include "util.h"
+#include "logger.h"
 #include <utils/ErrCode.h>
 #include "ComPack.h"
+using namespace toolkit;
 
 int serviceFrame2Array(ServiceFrame* serviceFrame,unsigned char* pack)
 {
@@ -80,7 +81,7 @@ int SendPacketIn(int comPort, ServiceFrame* serviceFrame)
 	ret = serviceFrame2Array(serviceFrame,RawPack + index);
 	if(ret < ERR_OK)
 	{
-		LOGCATE("serviceFrame2Array failed ret =%d",ret);
+		LogE("serviceFrame2Array failed ret =%d",ret);
 		return ERR_FAIL;
 	}
 	index += ret;
@@ -89,11 +90,11 @@ int SendPacketIn(int comPort, ServiceFrame* serviceFrame)
 	index += 1;
 	RawPack[index] = (crc & 0xFF);//0x83;
 	index += 1;
-    LOGCATE("%s", hexdump(reinterpret_cast<void *>(RawPack), index).c_str());
+	LogE("%s", hexdump(reinterpret_cast<void *>(RawPack), index).c_str());
 	int len = com_send(comPort, reinterpret_cast<char *>(RawPack), index);
 	if(len!= index)
 	{
-		LOGCATE("com_send failed ret =%d need =%d",len,index);
+		LogE("com_send failed ret =%d need =%d",len,index);
 	    return ERR_IOSEND;
 	}
 	return ERR_OK;
@@ -104,7 +105,7 @@ int sendAck(int comPort)
 	int len = com_send(comPort, reinterpret_cast<char *>(ackBuf), 7);
 	if(len!= 7)
 	{
-		LOGCATE("com_send failed ret =%d need =%d",len,7);
+		LogE("com_send failed ret =%d need =%d",len,7);
 		return ERR_IOSEND;
 	}
 	return ERR_OK;
@@ -125,39 +126,39 @@ int analysisAck(unsigned char* data,int len)
 	unsigned short crc = 0;
 	if(data[idx] != PACK_START_FLAG)
 	{
-		DEBUG_LOGCATE("PACK_START_FLAG ERR");
+		LogE("PACK_START_FLAG ERR");
 		return ERR_FAIL;
 	}
 	idx++;
 	packLen = (data[idx] << 8) + data[idx+1];
 	if (packLen != len)
 	{
-		DEBUG_LOGCATE("len ERR");
+		LogE("len ERR");
 		return ERR_FAIL;
 	}
 	idx+=2;
 	if (data[idx] != SERVICE_ID_RECV)
 	{
-		DEBUG_LOGCATE("SERVICE_ID_RECV ERR");
+		LogE("SERVICE_ID_RECV ERR");
 		return ERR_FAIL;
 	}
 	idx++;
 	if (data[idx] != RESPONS_SUCCESS)
 	{
-		DEBUG_LOGCATE("RESPONS ERR");
+		LogE("RESPONS ERR");
 		return ERR_FAIL;
 	}
 	idx++;
 	crc = Calc_CRC_CCITT(data, len-2);
 	if(data[idx] != (crc >> 8))
 	{
-		DEBUG_LOGCATE("crc ERR");
+		LogE("crc ERR");
 		return ERR_FAIL;
 	}
 	idx++;
 	if(data[idx] != (crc & 0xFF))
 	{
-		DEBUG_LOGCATE("crc ERR");
+		LogE("crc ERR");
 		return ERR_FAIL;
 	}
 	return ERR_OK;
@@ -170,14 +171,14 @@ int analysisFrame(unsigned char* data,unsigned char* recvdata,int* recvdataLen)
 	frameLen = data[idx];
 	if(frameLen < 7 || frameLen >255)
 	{
-		LOGCATE("frameLen failed len =%d",frameLen);
+		LogE("frameLen failed len =%d",frameLen);
 		return ERR_FAIL;
 	}
 	*recvdataLen = frameLen - 7;
 	memcpy(recvdata,data+7,*recvdataLen);
-	LOGCATE("RECV0 =%d ",recvdata[0]);
-	LOGCATE("frameLen =%d ",frameLen);
-	LOGCATE("%s", hexdump(reinterpret_cast<void *>(data), frameLen).c_str());
+	LogE("RECV0 =%d ",recvdata[0]);
+	LogE("frameLen =%d ",frameLen);
+	LogE("%s", hexdump(reinterpret_cast<void *>(data), frameLen).c_str());
 	return ERR_OK;
 }
 
@@ -197,7 +198,7 @@ int analysisPack(unsigned char* data,int dataLen,unsigned char* recvData,int* re
 	unsigned short crc = 0;
 	if(data[idx] != PACK_START_FLAG)
 	{
-		LOGCATE("PACK_START_FLAG ERR,start =%u",data[idx]);
+		LogE("PACK_START_FLAG ERR,start =%u",data[idx]);
 		return ERR_FAIL;
 	}
 	idx++;
@@ -210,27 +211,27 @@ int analysisPack(unsigned char* data,int dataLen,unsigned char* recvData,int* re
 	idx+=2;
 	if (!(data[idx] == SERVICE_ID_RECV || data[idx] == SERVICE_ID_SEND) )
 	{
-		DEBUG_LOGCATE("SERVICE_ID_RECV ERR");
+		LogE("SERVICE_ID_RECV ERR");
 		return ERR_FAIL;
 	}
 	idx++;
 	ret = analysisFrame(data+idx,recvData,recvDataLen);
 	if (ret != ERR_OK)
 	{
-		DEBUG_LOGCATE("analysisFrame ERR ret =%d",ret);
+		LogE("analysisFrame ERR ret =%d",ret);
 		return ERR_FAIL;
 	}
 
 	crc = Calc_CRC_CCITT(data, packLen-2);
 	if(data[packLen-2] != (crc >> 8))
 	{
-        LOGCATE("crc ERR data =%u %u",data[packLen-2],data[packLen-1]);
-		LOGCATE("crc ERR crc =%u %u",crc >> 8,(crc & 0xFF));
+		LogE("crc ERR data =%u %u",data[packLen-2],data[packLen-1]);
+		LogE("crc ERR crc =%u %u",crc >> 8,(crc & 0xFF));
 		return ERR_FAIL;
 	}
 	if(data[packLen-1] != (crc & 0xFF))
 	{
-		DEBUG_LOGCATE("crc ERR");
+		LogE("crc ERR");
 		return ERR_FAIL;
 	}
 	return ERR_OK;

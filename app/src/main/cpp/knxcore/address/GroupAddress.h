@@ -23,12 +23,9 @@ public:
     Ptr of(byte* bytes,int bytesLen) {
         return std::make_shared<GroupAddress>(bytes,bytesLen);
     }
-//    Ptr of(std::string addressAsString){
-//        addressAsString.
-//    }
     GroupAddress() {}
     ~GroupAddress(){}
-    int of(unsigned char main, unsigned char middle, unsigned char sub);
+    Ptr of(unsigned char main, unsigned char middle, unsigned char sub);
     AddressType getAddressType();
     string getAddress();
 private:

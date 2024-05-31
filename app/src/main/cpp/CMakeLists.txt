@@ -1,6 +1,9 @@
 PROJECT(thirdparty C CXX)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10.2)
 
+
+option(ENABLE_ANDROID "Enable android compile" ON)
+
 include(CheckStructHasMember)
 include(CheckSymbolExists)
 list(APPEND CMAKE_REQUIRED_DEFINITIONS -D_GNU_SOURCE)
@@ -112,3 +115,8 @@ target_link_libraries( # Specifies the target library.
         ${native-libs}
         #libsrt
         )
+#是否在安卓上编译
+if(NOT ENABLE_ANDROID)
+    list(REMOVE_ITEM src-files  ${CMAKE_SOURCE_DIR}/JniImp.cpp)
+    add_executable(knxdemo main.cpp)
+endif()

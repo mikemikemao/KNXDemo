@@ -19,9 +19,7 @@
 #include <arpa/inet.h>
 #include "alloc.h"
 #include <pthread.h>
-#include <utils/LogUtil.h>
 #include "proto.h"
-
 
 #define LOCAL_IP      "10.6.120.85"
 #define KNX_MUILCAST_RECV_LEN 2048*100
@@ -82,15 +80,15 @@ void KNXCSearchRQ()
     uint8_t buffer[KNX_HEADER_SIZE + KNX_SEARCH_REQUEST_SIZE];
     knx_generate(buffer, KNX_SEARCH_REQUEST, &packet_in);
 
-    LOGCATE("KNXCSearchRQ->server_ip %s server_port %d.\n",KNX_MUILCAST_ADDR,KNXS_PORT);
+    //LOGCATE("KNXCSearchRQ->server_ip %s server_port %d.\n",KNX_MUILCAST_ADDR,KNXS_PORT);
     sendlen = knx_send(g_knxClient.control_socket,(unsigned char*)buffer, sizeof(buffer),KNX_MUILCAST_ADDR, KNXS_PORT);
     if(sendlen != sizeof(buffer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 
 
-    LOGCATE("KNXCSearchRQ success %d.\n",g_knxClient.control_socket);
+    //LOGCATE("KNXCSearchRQ success %d.\n",g_knxClient.control_socket);
 
     return ;
 }
@@ -108,15 +106,15 @@ void KNXCDescription()
     uint8_t buffer[KNX_HEADER_SIZE + KNX_SEARCH_REQUEST_SIZE];
     knx_generate(buffer, KNX_DESCRIPTION_REQUEST, &packet_in);
 
-    LOGCATE("KNXCSearchRQ->server_ip %s server_port %d.\n",KNX_NET_IP_ROUTER,KNXS_PORT);
+    //LOGCATE("KNXCSearchRQ->server_ip %s server_port %d.\n",KNX_NET_IP_ROUTER,KNXS_PORT);
     sendlen = knx_send(g_knxClient.control_socket,(unsigned char*)buffer, sizeof(buffer),KNX_NET_IP_ROUTER, KNXS_PORT);
     if(sendlen != sizeof(buffer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 
 
-    LOGCATE("KNXCSearchRQ success %d.\n",g_knxClient.control_socket);
+    //LOGCATE("KNXCSearchRQ success %d.\n",g_knxClient.control_socket);
 
     return ;
 }
@@ -148,15 +146,15 @@ void KNXCConnectRQ()
     uint8_t buffer[KNX_HEADER_SIZE + KNX_CONNECTION_REQUEST_SIZE];
     knx_generate(buffer, KNX_CONNECTION_REQUEST, &packet_in);
 
-    LOGCATE("KNXCConnectRQ->server_ip %s server_port %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port);
+    //LOGCATE("KNXCConnectRQ->server_ip %s server_port %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port);
     sendlen = knx_send(g_knxClient.control_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(buffer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 
 
-    LOGCATE("KNXCConnectRQ success %d.\n",g_knxClient.control_socket);
+    //LOGCATE("KNXCConnectRQ success %d.\n",g_knxClient.control_socket);
 
     return ;
 }
@@ -182,15 +180,15 @@ void KNXCConStateRQ()
     uint8_t buffer[KNX_HEADER_SIZE + KNX_CONNECTION_STATE_REQUEST_SIZE];
     knx_generate(buffer, KNX_CONNECTION_STATE_REQUEST, &packet_in);
 
-    LOGCATE("KNXCConStateRQ->server_ip %s server_port %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port);
+    //LOGCATE("KNXCConStateRQ->server_ip %s server_port %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port);
     sendlen = knx_send(g_knxClient.control_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(buffer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 
 
-    LOGCATE("KNXCConStateRQ success %d.\n",g_knxClient.control_socket);
+    //LOGCATE("KNXCConStateRQ success %d.\n",g_knxClient.control_socket);
 
     return ;
 }
@@ -234,14 +232,14 @@ void KNXCTunnelRQ_OpenLight()
     uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-    LOGCATE("KNXCTunnelRQ_Open->server_ip %s server_port %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port);
+    //LOGCATE("KNXCTunnelRQ_Open->server_ip %s server_port %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port);
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(buffer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 
-    LOGCATE("KNXCTunnelRQ_Open success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_Open success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -285,15 +283,15 @@ void KNXCTunnelRQ_AddrWrite()
     uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-    LOGCATE("KNXCTunnelRQ_AddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+    //LOGCATE("KNXCTunnelRQ_AddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(buffer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 
 
-    LOGCATE("KNXCTunnelRQ_AddrWrite success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_AddrWrite success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -346,27 +344,27 @@ void KNXCTunnelRQ_IndAddrRead_step1(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_IndAddrRead_step1->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_IndAddrRead_step1->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_IndAddrRead_step1->server_ip %s server_port %d peersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_IndAddrRead_step1->server_ip %s server_port %d peersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_IndAddrRead_step1 success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_IndAddrRead_step1 success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -414,27 +412,27 @@ void KNXCTunnelRQ_IndAddrWrite(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_IndAddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_IndAddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_IndAddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_IndAddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_IndAddrWrite success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_IndAddrWrite success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -487,27 +485,27 @@ void KNXCTunnelRQ_IndAddrRead_step2(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_IndAddrRead_step2->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_IndAddrRead_step2->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_IndAddrRead_step2->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_IndAddrRead_step2->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_IndAddrRead_step2 success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_IndAddrRead_step2 success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -560,27 +558,27 @@ void KNXCTunnelRQ_IndAddrConnect(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_AddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_AddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WkKNXCTunnelRQ_IndAddrConnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WkKNXCTunnelRQ_IndAddrConnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_IndAddrConnect success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_IndAddrConnect success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -633,27 +631,27 @@ void KNXCTunnelRQ_IndAddrDevDescrRead(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_AddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_AddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_IndAddrDevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_IndAddrDevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_IndAddrDevDescrRead success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_IndAddrDevDescrRead success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -708,27 +706,27 @@ void KNXCTunnelRQ_IndAddrPropValueRead(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_AddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_AddrWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_IndAddrPropValueRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_IndAddrPropValueRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_IndAddrPropValueRead success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_IndAddrPropValueRead success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -781,27 +779,27 @@ void KNXCTunnelRQ_IndAddrRestart(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_IndAddrRestart->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_IndAddrRestart->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_IndAddrRestart->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_IndAddrRestart->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_IndAddrRestart success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_IndAddrRestart success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -853,27 +851,27 @@ void KNXCTunnelRQ_IndAddrDisconnect(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_IndAddrDisconnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_IndAddrDisconnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_IndAddrDisconnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_IndAddrDisconnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_IndAddrDisconnect success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_IndAddrDisconnect success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -927,27 +925,27 @@ void KNXCTunnelRQ_EditConnect(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_EditConnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_EditConnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_EditConnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_EditConnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_EditConnect success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_EditConnect success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1001,27 +999,27 @@ void KNXCTunnelRQ_EditAuthReq(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_EditAuthReq->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_EditAuthReq->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_EditAuthReq->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_EditAuthReq->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_EditAuthReq success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_EditAuthReq success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1076,27 +1074,27 @@ void KNXCTunnelRQ_EditPropValueWrite(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_EditPropValueWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_EditPropValueWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_EditPropValueWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_EditPropValueWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_EditPropValueWrite success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_EditPropValueWrite success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1157,27 +1155,27 @@ void KNXCTunnelRQ_EditMemWrite(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_EditMemWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_EditMemWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_EditMemWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_EditMemWrite->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_EditMemWrite success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_EditMemWrite success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1231,27 +1229,27 @@ void KNXCTunnelRQ_EditRestart(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_EditRestart->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_EditRestart->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_EditRestart->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_EditRestart->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_EditRestart success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_EditRestart success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1304,27 +1302,27 @@ void KNXCTunnelRQ_Rs485DevConfigRq(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_Rs485DevConfigRq->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_Rs485DevConfigRq->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_Rs485DevConfigRq->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_Rs485DevConfigRq->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.control_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_Rs485DevConfigRq success %d.\n",g_knxClient.control_socket);
+    //LOGCATE("KNXCTunnelRQ_Rs485DevConfigRq success %d.\n",g_knxClient.control_socket);
 
     return ;
 }
@@ -1378,27 +1376,27 @@ void KNXCTunnelRQ_Rs485Connect(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_Rs485Connect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_Rs485Connect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_Rs485Connect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_Rs485Connect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_Rs485Connect success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_Rs485Connect success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1451,27 +1449,27 @@ void KNXCTunnelRQ_Rs485DevDescrRead(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1525,27 +1523,27 @@ void KNXCTunnelRQ_Rs485PropValueRead(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1601,27 +1599,27 @@ void KNXCTunnelRQ_Rs485PropValueWrite_open(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_Rs485PropValueWrite_open->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_Rs485PropValueWrite_open->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_Rs485PropValueWrite_open->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_Rs485PropValueWrite_open->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_Rs485PropValueWrite_open success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_Rs485PropValueWrite_open success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1675,27 +1673,27 @@ void KNXCTunnelRQ_Rs485PropValueWrite_close(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_Rs485PropValueWrite_close->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_Rs485PropValueWrite_close->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_Rs485PropValueWrite_close->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_Rs485PropValueWrite_close->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_Rs485PropValueWrite_close success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_Rs485PropValueWrite_close success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1749,27 +1747,27 @@ void KNXCTunnelRQ_Rs485PropValueRead_step2(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_Rs485DevDescrRead success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1823,27 +1821,27 @@ void KNXCTunnelRQ_Rs485Disconnect(int seq_num)
 	uint8_t buffer[KNX_HEADER_SIZE + knx_tunnel_request_size(&packet_in)];//knx_tunnel_request_size�˽ӿ�������
     knx_generate(buffer, KNX_TUNNEL_REQUEST, &packet_in);
 
-	LOGCATE("KNXCTunnelRQ_Rs485Disconnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
+	//LOGCATE("KNXCTunnelRQ_Rs485Disconnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(buffer));
 	sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(buffer),g_knxClient.remote_ip, g_knxClient.remote_port);
 	if(sendlen != sizeof(buffer))
 	{
-		LOGCATE("knx_send error .\n");
+		//LOGCATE("knx_send error .\n");
 	}
 
 #else
     uint8_t buffer[256] = {0};
     memcpy(buffer,peer,sizeof(peer));
-    LOGCATE("WKNXCTunnelRQ_Rs485Disconnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
+    //LOGCATE("WKNXCTunnelRQ_Rs485Disconnect->server_ip %s server_port %d buffersize %d.\n",g_knxClient.remote_ip,g_knxClient.remote_port,sizeof(peer));
     sendlen = knx_send(g_knxClient.tunnel_socket,(unsigned char*)buffer, sizeof(peer),g_knxClient.remote_ip, g_knxClient.remote_port);
     if(sendlen != sizeof(peer))
     {
-        LOGCATE("knx_send error .\n");
+        //LOGCATE("knx_send error .\n");
     }
 #endif
 
 
 
-    LOGCATE("KNXCTunnelRQ_Rs485Disconnect success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCTunnelRQ_Rs485Disconnect success %d.\n",g_knxClient.tunnel_socket);
 
     return ;
 }
@@ -1864,7 +1862,7 @@ int knx_packet_parse(int fd)
     {
         knx_parse(buffer, sizeof(buffer), &packet_out);
 
-        LOGCATE("knx_packet_parse packet_out.service: 0x%x.\n",packet_out.service);
+        //LOGCATE("knx_packet_parse packet_out.service: 0x%x.\n",packet_out.service);
         if(KNX_SEARCH_RESPONSE == packet_out.service)
         {
             knx_host_info host;
@@ -1874,15 +1872,15 @@ int knx_packet_parse(int fd)
             knx_host_info_parse(buffer + KNX_HEADER_SIZE, n - KNX_HEADER_SIZE, &host);
             memcpy(&addr,&host.address,4);
             host_ip = inet_ntoa(addr);
-            LOGCATE("knx_packet_parse host address: %s.\n",host_ip);
-            LOGCATE("knx_packet_parse host port: %d.\n",ntohs(host.port));
+            //LOGCATE("knx_packet_parse host address: %s.\n",host_ip);
+            //LOGCATE("knx_packet_parse host port: %d.\n",ntohs(host.port));
             g_knxClient.remote_port = ntohs(host.port);
             snprintf(g_knxClient.remote_ip,sizeof(g_knxClient.remote_ip),"%s",host_ip);
-            LOGCATE("knx_packet_parse host address: %s port: %d .\n",g_knxClient.remote_ip,g_knxClient.remote_port);
+            //LOGCATE("knx_packet_parse host address: %s port: %d .\n",g_knxClient.remote_ip,g_knxClient.remote_port);
         }
         else if(KNX_DISCONNECT_RESPONSE == packet_out.service)
         {
-            DEBUG_LOGCATI("1111111111111111");
+            //DEBUG_LOGCATI("1111111111111111");
         }
         else if(KNX_CONNECTION_RESPONSE == packet_out.service)
         {
@@ -1890,11 +1888,11 @@ int knx_packet_parse(int fd)
             struct in_addr addr;
             memcpy(&addr,&packet_out.payload.conn_res.host.address,4);
             host_ip = inet_ntoa(addr);
-            LOGCATE("knx_packet_parse host address: %s.\n",host_ip);
-            LOGCATE("knx_packet_parse host port: %d.\n",ntohs(packet_out.payload.conn_res.host.port));
+            //LOGCATE("knx_packet_parse host address: %s.\n",host_ip);
+            //LOGCATE("knx_packet_parse host port: %d.\n",ntohs(packet_out.payload.conn_res.host.port));
             g_knxClient.remote_chid = packet_out.payload.conn_res.channel;
-            LOGCATE("knx_packet_parse conn_res.channel: %d.\n",g_knxClient.remote_chid);
-            LOGCATE("knx_packet_parse conn_res.status: %d.\n",packet_out.payload.conn_res.status);
+            //LOGCATE("knx_packet_parse conn_res.channel: %d.\n",g_knxClient.remote_chid);
+            //LOGCATE("knx_packet_parse conn_res.status: %d.\n",packet_out.payload.conn_res.status);
         }
     }
     return 0;
@@ -1910,7 +1908,7 @@ static void* thr_knx_control_capture(void* pv)
     int iMaxSockFd;
     int iSelectRet = -1;
     int caplen = 0;
-    LOGCATE("thr_knx_control_capture entry....\n");
+    //LOGCATE("thr_knx_control_capture entry....\n");
     iMaxSockFd = g_knxClient.control_socket;
     while(1)
     {
@@ -1931,7 +1929,7 @@ static void* thr_knx_control_capture(void* pv)
                 caplen = knx_packet_parse(g_knxClient.control_socket);
                 if (caplen <= 0)
                 {
-                    //LOGCATE("thr_knx_control_capture, recvfrom err!\n");
+                    ////LOGCATE("thr_knx_control_capture, recvfrom err!\n");
                     continue;
                 }
 
@@ -1940,12 +1938,12 @@ static void* thr_knx_control_capture(void* pv)
         }
         else if(iSelectRet == 0)
         {
-            //LOGCATE("\n-------------we select over time ,return 0;-------------\n");
+            ////LOGCATE("\n-------------we select over time ,return 0;-------------\n");
             continue;
         }
         else
         {
-            LOGCATE("select failed!!\n");
+            //LOGCATE("select failed!!\n");
         }
     }
 
@@ -1962,7 +1960,7 @@ static void* thr_knx_tunnel_capture(void* pv)
     int iMaxSockFd;
     int iSelectRet = -1;
     int caplen = 0;
-    LOGCATE("thr_knx_tunnel_capture entry....\n");
+    //LOGCATE("thr_knx_tunnel_capture entry....\n");
     iMaxSockFd = g_knxClient.tunnel_socket;
     while(1)
     {
@@ -1983,7 +1981,7 @@ static void* thr_knx_tunnel_capture(void* pv)
                 caplen = knx_packet_parse(g_knxClient.tunnel_socket);
                 if (caplen <= 0)
                 {
-                    //LOGCATE("thr_knx_tunnel_capture, recvfrom err!\n");
+                    ////LOGCATE("thr_knx_tunnel_capture, recvfrom err!\n");
                     continue;
                 }
 
@@ -1992,12 +1990,12 @@ static void* thr_knx_tunnel_capture(void* pv)
         }
         else if(iSelectRet == 0)
         {
-            //LOGCATE("\n-------------we select over time ,return 0;-------------\n");
+            ////LOGCATE("\n-------------we select over time ,return 0;-------------\n");
             continue;
         }
         else
         {
-            LOGCATE("select failed!!\n");
+            //LOGCATE("select failed!!\n");
         }
     }
 
@@ -2009,7 +2007,7 @@ static void* thr_knx_tunnel_capture(void* pv)
 static void* thr_knx_keep_live(void* pv)
 {
 
-    LOGCATE("thr_knx_keep_live entry....\n");
+    //LOGCATE("thr_knx_keep_live entry....\n");
     while(1)
     {
         sleep(30);
@@ -2038,7 +2036,7 @@ static int KNXCreateSocket(int iSndBuffSize, int iRcvBuffSize)
 
     if (sock < 0)
     {
-        LOGCATE("create socket failed!!!\n");
+        //LOGCATE("create socket failed!!!\n");
 
         return -1;
     }
@@ -2046,14 +2044,14 @@ static int KNXCreateSocket(int iSndBuffSize, int iRcvBuffSize)
 #if 1
     if(-1 == setsockopt (sock, SOL_SOCKET, SO_RCVBUF,(const char*)&iRcvBuffSize,sizeof(int)))
     {
-        LOGCATE("setsockopt failed!!!\n");
+        //LOGCATE("setsockopt failed!!!\n");
         close(sock);
         return -1;
     }
 
     if(-1 == setsockopt (sock, SOL_SOCKET, SO_SNDBUF,(const char*)&iSndBuffSize,sizeof(int)))
     {
-        LOGCATE("setsockopt failed!!!\n");
+        //LOGCATE("setsockopt failed!!!\n");
         close(sock);
         return -1;
     }
@@ -2061,7 +2059,7 @@ static int KNXCreateSocket(int iSndBuffSize, int iRcvBuffSize)
 
     if(-1 == setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof (optval)))
     {
-        LOGCATE("setsockopt failed!!!\n");
+        //LOGCATE("setsockopt failed!!!\n");
         close(sock);
         return -1;
     }
@@ -2088,11 +2086,11 @@ int knx_init_sock()
     g_knxClient.control_socket = KNXCreateSocket(SOCKET_SEND_BUFFER, SOCKET_RECV_BUFFER);
     if(bind(g_knxClient.control_socket, (struct sockaddr *)&srv, sizeof(srv)) < 0)
     {
-        LOGCATE("bind to dev fail: %s",strerror(errno));
+        //LOGCATE("bind to dev fail: %s",strerror(errno));
         close(g_knxClient.control_socket);
         return -1;
     }
-    LOGCATE("KNXCreateSocket control_socket success %d.\n",g_knxClient.control_socket);
+    //LOGCATE("KNXCreateSocket control_socket success %d.\n",g_knxClient.control_socket);
     //����
     bzero(&srv, sizeof(srv));
     srv.sin_family = AF_INET;
@@ -2101,11 +2099,11 @@ int knx_init_sock()
     g_knxClient.tunnel_socket = KNXCreateSocket(SOCKET_SEND_BUFFER, SOCKET_RECV_BUFFER);
     if(bind(g_knxClient.tunnel_socket, (struct sockaddr *)&srv, sizeof(srv)) < 0)
     {
-        LOGCATE("bind to dev fail: %s",strerror(errno));
+        //LOGCATE("bind to dev fail: %s",strerror(errno));
         close(g_knxClient.tunnel_socket);
         return -1;
     }
-    LOGCATE("KNXCreateSocket tunnel_socket success %d.\n",g_knxClient.tunnel_socket);
+    //LOGCATE("KNXCreateSocket tunnel_socket success %d.\n",g_knxClient.tunnel_socket);
 #if 0
     //����
 	bzero(&srv, sizeof(srv));
@@ -2115,11 +2113,11 @@ int knx_init_sock()
 	g_knxClient.mul_fd = KNXCreateSocket(SOCKET_SEND_BUFFER, SOCKET_RECV_BUFFER);
 	if(bind(g_knxClient.mul_fd, (struct sockaddr *)&srv, sizeof(srv)) < 0)
 	{
-		LOGCATE("bind to dev fail: %s",strerror(errno));
+		//LOGCATE("bind to dev fail: %s",strerror(errno));
 		close(g_knxClient.mul_fd);
 		return -1;
 	}
-	LOGCATE("KNXCreateSocket mul socket success %d.\n",g_knxClient.mul_fd);
+	//LOGCATE("KNXCreateSocket mul socket success %d.\n",g_knxClient.mul_fd);
 #endif
     return 0;
 }
@@ -2130,7 +2128,7 @@ int knxTest()
 
     int retVal = 0;
     retVal = knx_init_sock();
-    LOGCATE("knx_init_sock done.\n");
+    //LOGCATE("knx_init_sock done.\n");
 
     pthread_t tid1;
     pthread_create( &tid1, NULL, thr_knx_control_capture, NULL );
@@ -2139,9 +2137,9 @@ int knxTest()
     pthread_create( &tid2, NULL, thr_knx_tunnel_capture, NULL );
     sleep(3);
     KNXCSearchRQ();
-    LOGCATE("KNXCSearch done.\n");
+    //LOGCATE("KNXCSearch done.\n");
     KNXCDescription();
-    LOGCATE("KNXCDescription done.\n");
+    //LOGCATE("KNXCDescription done.\n");
     sleep(5);
     KNXCConnectRQ();
     printf("KNXCConnectRQ done.\n");

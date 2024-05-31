@@ -1,12 +1,13 @@
 #include <stdint.h>
 #include <string.h>
-#include <utils/LogUtil.h>
-#include <utils/ToolUnits.h>
 #include <utils/ErrCode.h>
 #include "ComPack.h"
 #include "Define.h"
 #include "ComFunc.h"
 #include "ComDrive.h"
+#include "util.h"
+#include "logger.h"
+using namespace toolkit;
 
 static int recAck(int port_h)
 {
@@ -20,7 +21,7 @@ static int recAck(int port_h)
     }
     //收ACK
     len = com_recv(port_h,ackBuff,ACK_LEN);
-    LOGCATE("%s", hexdump(reinterpret_cast<void *>(ackBuff), len).c_str());
+    LogD("%s", hexdump(reinterpret_cast<void *>(ackBuff), len).c_str());
     if(len<=0)
     {
         return ERR_IORECV;
@@ -28,7 +29,7 @@ static int recAck(int port_h)
     ret = analysisAck((unsigned char*)ackBuff,len);
     if(ret != 0)
     {
-        LOGCATE("analysisPack err");
+        LogE("analysisPack err");
         return ERR_FAIL;
     }
 
@@ -47,7 +48,7 @@ static int recBuff(int port_h,unsigned char* data,int* dataLen)
     }
     //收ACK
     len = com_recv(port_h,RecvBuff,len);
-    LOGCATE("%s", hexdump(reinterpret_cast<void *>(RecvBuff), len).c_str());
+    LogE("%s", hexdump(reinterpret_cast<void *>(RecvBuff), len).c_str());
     if(len<=0)
     {
         return ERR_IORECV;
@@ -55,7 +56,7 @@ static int recBuff(int port_h,unsigned char* data,int* dataLen)
     ret = analysisPack((unsigned char*)RecvBuff,len,data,dataLen);
     if(ret != 0)
     {
-        LOGCATE("analysisPack err");
+        LogE("analysisPack err");
         return ERR_FAIL;
     }
     return ERR_OK;
@@ -73,7 +74,7 @@ int comLightControl(unsigned char state)
 
     port_h = com_open(COM_PATH, BAUND_RATE, errmsg);
     if (port_h < 0) {
-    	LOGCATE("com_open failed ret=%d msg=%s",port_h,errmsg);
+        LogE("com_open failed ret=%d msg=%s",port_h,errmsg);
     	return -1;
     }
     serviceFrame.size = 8;
@@ -91,7 +92,7 @@ int comLightControl(unsigned char state)
 	ret = recAck(port_h);
 	if(ret != ERR_OK)
     {
-	    LOGCATE("recAck failed ret =%d",ret);
+        LogE("recAck failed ret =%d",ret);
         com_close(port_h);
         return ERR_FAIL;
     }
@@ -103,13 +104,13 @@ int comLightControl(unsigned char state)
     }
     if(ret != ERR_OK)
     {
-        LOGCATE("recAck recBuff ret =%d",ret);
+        LogE("recAck recBuff ret =%d",ret);
         com_close(port_h);
         return ERR_FAIL;
     }
     if(state != recvBuff[0])
     {
-        LOGCATE("recvBuff is disconstent state =%d recv =%d ",state,recvBuff[0]);
+        LogE("recvBuff is disconstent state =%d recv =%d ",state,recvBuff[0]);
         com_close(port_h);
         return ERR_FAIL;
     }
@@ -135,7 +136,7 @@ int comLightStateControl()
 	memset(&serviceFrame,0x00,sizeof(ServiceFrame));
 	port_h = com_open(COM_PATH, BAUND_RATE, errmsg);
 	if (port_h < 0) {
-		LOGCATE("com_open failed ret=%d msg=%s",port_h,errmsg);
+        LogE("com_open failed ret=%d msg=%s",port_h,errmsg);
 		return -1;
 	}
 	serviceFrame.size = 7;
@@ -153,7 +154,7 @@ int comLightStateControl()
     ret = recAck(port_h);
     if(ret != ERR_OK)
     {
-        LOGCATE("recAck failed ret =%d",ret);
+        LogE("recAck failed ret =%d",ret);
         com_close(port_h);
         return ERR_FAIL;
     }
@@ -165,7 +166,7 @@ int comLightStateControl()
     }
     if(ret != ERR_OK)
     {
-        LOGCATE("recAck recBuff ret =%d",ret);
+        LogE("recAck recBuff ret =%d",ret);
         com_close(port_h);
         return ERR_FAIL;
     }
